@@ -18,6 +18,7 @@ import './suit.css';
 import {makeLsstClickToAction, makeLsstTapEntry, LSST_DP02_DC2, LSST_DP03_SSO} from './actions.jsx';
 import {RubinLanding} from './RubinLanding.jsx';
 import APP_ICON from '../html/images/rubin-favicon-transparent-45px.png';
+import {makeDachsTapEntry, makeChandraTapEntry} from './actions.jsx';
 
 // import SUIT_ICO from 'html/images/rubin_logo_transparent-70.png';
 
@@ -86,9 +87,8 @@ props = mergeObjectOnly(props, window.firefly?.app ?? {});
 
 
 const tapServices=  [
-    makeLsstTapEntry(),
-    ...getTAPServices( ['IRSA', 'Gaia', 'CADC', 'MAST Images', 'GAVO', 'HSA', 'NED',
-        'VizieR (CDS)', 'Simbad (CDS)', 'NASA Exoplanet Archive'])
+    makeChandraTapEntry(),
+    makeDachsTapEntry()
 ];
 
 

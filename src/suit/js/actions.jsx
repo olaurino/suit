@@ -123,6 +123,24 @@ export function makeLsstClickToAction() {
 }
 
 
+export function makeChandraTapEntry() {
+
+    return (
+        {
+            label: "CSC 2.0",
+            value: 'http://cda.cfa.harvard.edu/csc2tap',
+            fovDeg: 10,
+            centerWP: makeWorldPt(62,-37).toString(),
+            //hipsUrl: 'https://irsa.ipac.caltech.edu/data/hips/list',
+            examples: [
+                {
+                    description: 'TEST',
+                    statement:
+                        `SELECT m.name, m.ra, m.dec from csc2.master_source m`
+                },
+            ]
+        });
+};
 
 
 export function makeLsstTapEntry() {
