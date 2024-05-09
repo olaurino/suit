@@ -123,6 +123,26 @@ export function makeLsstClickToAction() {
 }
 
 
+
+export function makeDachsTapEntry() {
+
+    return (
+        {
+            label: "Dachs",
+            value: 'http://dachs-service.dachs.svc.cluster.local:8080/tap',
+            //fovDeg: 10,
+            //centerWP: makeWorldPt(62,-37).toString(),
+            //hipsUrl: 'https://cdaftp.cfa.harvard.edu/cxc-hips/',
+            //examples: [
+            //    {
+            //        description: 'TEST',
+            //        statement:
+            //            `SELECT m.name, m.ra, m.dec from csc2.master_source m`
+            //    },
+            //]
+        });
+};
+
 export function makeChandraTapEntry() {
 
     return (
@@ -131,7 +151,7 @@ export function makeChandraTapEntry() {
             value: 'http://cda.cfa.harvard.edu/csc2tap',
             fovDeg: 10,
             centerWP: makeWorldPt(62,-37).toString(),
-            //hipsUrl: 'https://irsa.ipac.caltech.edu/data/hips/list',
+            hipsUrl: 'https://cdaftp.cfa.harvard.edu/cxc-hips/',
             examples: [
                 {
                     description: 'TEST',
