@@ -132,7 +132,7 @@ export function makeDachsTapEntry() {
             value: 'http://dachs-service.dachs.svc.cluster.local:8080/tap',
             //fovDeg: 10,
             //centerWP: makeWorldPt(62,-37).toString(),
-            //hipsUrl: 'https://cdaftp.cfa.harvard.edu/cxc-hips/',
+            hipsUrl: 'https://cdaftp.cfa.harvard.edu/cxc-hips/',
             //examples: [
             //    {
             //        description: 'TEST',
@@ -149,8 +149,8 @@ export function makeChandraTapEntry() {
         {
             label: "CSC 2.0",
             value: 'http://cda.cfa.harvard.edu/csc2tap',
-            fovDeg: 10,
-            centerWP: makeWorldPt(62,-37).toString(),
+            // fovDeg: 10,
+            // centerWP: makeWorldPt(62,-37).toString(),
             hipsUrl: 'https://cdaftp.cfa.harvard.edu/cxc-hips/',
             examples: [
                 {

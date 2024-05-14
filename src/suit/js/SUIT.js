@@ -38,18 +38,20 @@ let props = {
     appIcon: <img src={APP_ICON}/>,
     showViewsSwitch: true,
     menu: [
-        // {label:'Nexus TAP', action: 'TAPSearch', category: NEXUS, primary: true},
-        // {label: 'CSC 2.0', action: "Nexus-CSC2", primary: true, category: NEXUS,
-        //     title: 'Search CSC 2.0 Catalog'},
-        {label: 'DP0.2 Images', action: LSST_DP02_DC2_IMAGES, primary:false, category:RUBIN,
-            title: 'Search DP0.2 Images'},
+        {label: 'Nexus Prototpe', action: "Nexus-Proto", primary: true, category: NEXUS,
+            title: 'Search Nexus Prototype'},
+        {label: 'CSC 2.0', action: "Nexus-CSC2", primary: true, category: NEXUS,
+            title: 'Search CSC 2.0 Catalog'},
+        {label:'Generic TAP', action: 'TAPSearch', category: OTHER_CAT, primary: true},
+        // {label: 'DP0.2 Images', action: LSST_DP02_DC2_IMAGES, primary:false, category:RUBIN,
+        //     title: 'Search DP0.2 Images'},
         // {label: 'DP0.2 Catalogs', action: LSST_DP02_DC2, primary:false, category:RUBIN,
         //     title: 'Search DP0.2 catalogs'},
         // {label: 'DP0.3 Catalogs', action: LSST_DP03_SSO, primary:false, category:RUBIN,
         //     title: 'Search DP0.3 catalogs'},
 
         {label: 'HiPS and IRSA Images', action: 'ImageSelectDropDownCmd', category: OTHER_CAT},
-        {label: 'IRSA Images', action: 'ImageSelectDropDownCmd', category: OTHER_CAT},
+        // {label: 'IRSA Images', action: 'ImageSelectDropDownCmd', category: OTHER_CAT},
         {label:'IRSA Catalogs', action: 'IrsaCatalog',  category:OTHER_CAT},
         {label:'NED Objects', action: 'ClassicNedSearchCmd', primary: false, category:OTHER_CAT},
         {label:'VO Cone Search', action: 'ClassicVOCatalogPanelCmd', primary: false, category: OTHER_CAT},
@@ -66,17 +68,21 @@ let props = {
         // <TapSearchPanel lockService={true} lockedServiceName={LSST_DP02_DC2} groupKey={LSST_DP02_DC2}
         //                 layout= {{width: '100%'}}
         //                 name={LSST_DP02_DC2}/>,
-        <TapSearchPanel lockService={true} lockedServiceName={LSST_DP02_DC2_IMAGES} groupKey={LSST_DP02_DC2_IMAGES}
-                        lockObsCore={true} obsCoreLockTitle='DP0.2 Image Search via ObsTAP'
-                        layout= {{width: '100%'}}
-                        name={LSST_DP02_DC2_IMAGES}/>,
+        // <TapSearchPanel lockService={true} lockedServiceName={LSST_DP02_DC2_IMAGES} groupKey={LSST_DP02_DC2_IMAGES}
+        //                 lockObsCore={true} obsCoreLockTitle='DP0.2 Image Search via ObsTAP'
+        //                 layout= {{width: '100%'}}
+        //                 name={LSST_DP02_DC2_IMAGES}/>,
         // <TapSearchPanel lockService={true} lockedServiceName={LSST_DP03_SSO} groupKey={LSST_DP03_SSO}
         //                 layout= {{width: '100%'}}
         //                 name={LSST_DP03_SSO}/>,
-        // <TapSearchPanel lockService={true} lockedServiceName={"CSC 2.0"} groupKey={"Nexus"}
-        //                 lockObsCore={true} obsCoreLockTitle='CSC 2.0 via ObsTAP'
-        //                 layout= {{width: '100%'}}
-        //                 name={"Nexus-CSC2"}/>,
+        <TapSearchPanel lockService={true} lockedServiceName={"CSC 2.0"} groupKey={"CSC 2.0"}
+                        lockObsCore={true} obsCoreLockTitle='CSC 2.0 via ObsTAP'
+                        layout= {{width: '100%'}}
+                        name={"Nexus-CSC2"}/>,
+        <TapSearchPanel lockService={true} lockedServiceName={"Nexus Prototype"} groupKey={"Nexus-Proto"}
+                        lockObsCore={true} obsCoreLockTitle='Nexus via ObsTAP'
+                        layout= {{width: '100%'}}
+                        name={"Nexus-Proto"}/>,
     ],
 
 
@@ -90,9 +96,9 @@ props = mergeObjectOnly(props, window.firefly?.app ?? {});
 
 
 const tapServices=  [
-    makeChandraTapEntry(),
     makeDachsTapEntry(),
-    ...getTAPServices( [] )
+    makeChandraTapEntry(),
+    ...getTAPServices( ['IRSA', 'Gaia', 'CADC', 'MAST Images', 'GAVO', 'HSA', 'NED', 'NASA Exoplanet Archive'])
 ];
 
 
@@ -251,8 +257,8 @@ options = mergeObjectOnly(options, window.firefly?.options ?? {});
 firefly.bootstrap(props, options,
     getFireflyViewerWebApiCommands(undefined,
         [
-            {desc:LSST_DP02_DC2, name:LSST_DP02_DC2},
-            {desc:LSST_DP02_DC2_IMAGES, name:LSST_DP02_DC2_IMAGES},
-            {desc:LSST_DP03_SSO, name:LSST_DP03_SSO},
+            // {desc:LSST_DP02_DC2, name:LSST_DP02_DC2},
+            // {desc:LSST_DP02_DC2_IMAGES, name:LSST_DP02_DC2_IMAGES},
+            // {desc:LSST_DP03_SSO, name:LSST_DP03_SSO},
         ],
     ));
