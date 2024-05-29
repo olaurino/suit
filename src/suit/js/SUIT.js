@@ -19,6 +19,7 @@ import {makeLsstClickToAction, makeLsstTapEntry, LSST_DP02_DC2, LSST_DP03_SSO} f
 import {RubinLanding} from './RubinLanding.jsx';
 import APP_ICON from '../html/images/rubin-favicon-transparent-45px.png';
 import {makeDachsTapEntry, makeChandraTapEntry} from './actions.jsx';
+import {makeWorldPt} from 'firefly/visualize/Point.js';
 
 // import SUIT_ICO from 'html/images/rubin_logo_transparent-70.png';
 
@@ -38,17 +39,13 @@ let props = {
     appIcon: <img src={APP_ICON}/>,
     showViewsSwitch: true,
     menu: [
-        {label: 'Nexus Prototpe', action: "Nexus-Proto", primary: true, category: NEXUS,
-            title: 'Search Nexus Prototype'},
-        {label: 'CSC 2.0', action: "Nexus-CSC2", primary: true, category: NEXUS,
-            title: 'Search CSC 2.0 Catalog'},
+        {label: 'CfA Nexus Search', action: "Nexus-Proto", primary: true, category: NEXUS,
+            title: 'Search CfA Nexus Prototype'},
+        {label: 'CfA Nexus Detailed Search', action: "Nexus", primary: true, category: NEXUS,
+            title: 'Search CSC 2.1 Sources'},
+        {label: 'OIR Search', action: "OIR-TAP", primary: true, category: NEXUS,
+            title: 'Search Infrared Spectra'},
         {label:'Generic TAP', action: 'TAPSearch', category: OTHER_CAT, primary: true},
-        // {label: 'DP0.2 Images', action: LSST_DP02_DC2_IMAGES, primary:false, category:RUBIN,
-        //     title: 'Search DP0.2 Images'},
-        // {label: 'DP0.2 Catalogs', action: LSST_DP02_DC2, primary:false, category:RUBIN,
-        //     title: 'Search DP0.2 catalogs'},
-        // {label: 'DP0.3 Catalogs', action: LSST_DP03_SSO, primary:false, category:RUBIN,
-        //     title: 'Search DP0.3 catalogs'},
 
         {label: 'HiPS and IRSA Images', action: 'ImageSelectDropDownCmd', category: OTHER_CAT},
         // {label: 'IRSA Images', action: 'ImageSelectDropDownCmd', category: OTHER_CAT},
@@ -65,27 +62,19 @@ let props = {
 
 
     dropdownPanels: [
-        // <TapSearchPanel lockService={true} lockedServiceName={LSST_DP02_DC2} groupKey={LSST_DP02_DC2}
-        //                 layout= {{width: '100%'}}
-        //                 name={LSST_DP02_DC2}/>,
-        // <TapSearchPanel lockService={true} lockedServiceName={LSST_DP02_DC2_IMAGES} groupKey={LSST_DP02_DC2_IMAGES}
-        //                 lockObsCore={true} obsCoreLockTitle='DP0.2 Image Search via ObsTAP'
-        //                 layout= {{width: '100%'}}
-        //                 name={LSST_DP02_DC2_IMAGES}/>,
-        // <TapSearchPanel lockService={true} lockedServiceName={LSST_DP03_SSO} groupKey={LSST_DP03_SSO}
-        //                 layout= {{width: '100%'}}
-        //                 name={LSST_DP03_SSO}/>,
-        <TapSearchPanel lockService={true} lockedServiceName={"CSC 2.0"} groupKey={"CSC 2.0"}
-                        lockObsCore={true} obsCoreLockTitle='CSC 2.0 via ObsTAP'
-                        layout= {{width: '100%'}}
-                        name={"Nexus-CSC2"}/>,
-        <TapSearchPanel lockService={true} lockedServiceName={"Nexus Prototype"} groupKey={"Nexus-Proto"}
+        <TapSearchPanel lockService={true} lockedServiceName={"CfA Nexus Search"} groupKey={"Nexus-Proto"}
                         lockObsCore={true} obsCoreLockTitle='Nexus via ObsTAP'
                         layout= {{width: '100%'}}
                         name={"Nexus-Proto"}/>,
+        <TapSearchPanel lockService={true} lockedServiceName={"CfA Nexus Detailed Search"} groupKey={"Nexus"}
+                        lockObsCore={false}
+                        layout= {{width: '100%'}}
+                        name={"Nexus"}/>,
+        <TapSearchPanel lockService={true} lockedServiceName={"OIR Search"} groupKey={"OIR-TAP"}
+                        lockObsCore={true} obsCoreLockTitle='OIR via ObsTAP'
+                        layout= {{width: '100%'}}
+                        name={"OIR-TAP"}/>,
     ],
-
-
 
 };
 
@@ -94,11 +83,17 @@ let props = {
 props = mergeObjectOnly(props, window.firefly?.app ?? {});
 
 
-
-const tapServices=  [
+const tapServices = [
     makeDachsTapEntry(),
     makeChandraTapEntry(),
-    ...getTAPServices( ['IRSA', 'Gaia', 'CADC', 'MAST Images', 'GAVO', 'HSA', 'NED', 'NASA Exoplanet Archive'])
+    ({
+        label: "OIR Search",
+        value: 'http://oirsa.cfa.harvard.edu:8080/tap',
+        fovDeg: 0.1,
+        centerWP: makeWorldPt(62, -37).toString(),
+        hipsUrl: 'ivo://CDS/P/2MASS/color',
+    }),
+    ...getTAPServices(['IRSA', 'Gaia', 'CADC', 'MAST Images', 'GAVO', 'HSA', 'NED', 'NASA Exoplanet Archive'])
 ];
 
 
@@ -160,18 +155,11 @@ let options = {
     image : {
         canCreateExtractionTable: true,
     },
-    coverage : { // example of using DSS and wise combination for coverage (not that anyone would want to combination)
-        // Use a server that is purely internal to the RSP, pending authentication-flow changes:
-        hipsSourceURL : 'blank',
-        // hipsSource360URL : 'http://hips.hips.svc.cluster.local:8080/api/hips/images/color_gri', // url
+    coverage : {
+        hipsSourceURL : 'ivo://cxc.harvard.edu/P/cda/hips/allsky/rgb',
+        // hipsSource360URL : 'https://cdaftp.cfa.harvard.edu/cxc-hips',
         fovDegFallOver: .00001, // small number will never show an image only a HiPS
-        exclusiveHiPS: true,
-        imageSourceParams: { //use 2mass if the user forces an image request
-            Service : 'TWOMASS',
-            SurveyKey: 'asky',
-            SurveyKeyBand: 'k',
-            title : '2MASS K_s'
-        },
+        exclusiveHiPS: true
     },
     charts : {
         maxRowsForScatter: 20000,
@@ -182,54 +170,12 @@ let options = {
     },
     tapObsCore: {
         enableObsCoreDownload: true, // enable for other obscore
-        [LSST_DP02_DC2]  : {
-            enableObsCoreDownload: false, //disable for the portal
-            filterDefinitions: [
-                {
-                    name: 'LSSTCam',
-                    options: [
-                        {label: 'u', value : '367', title: '367nm central value'},
-                        {label: 'g', value : '483', title: '483nm central value'},
-                        {label: 'r', value : '622', title: '622nm central value'},
-                        {label: 'i', value : '755', title: '755nm central value'},
-                        {label: 'z', value : '869', title: '869nm central value'},
-                        {label: 'y', value : '971', title: '971nm central value'},
-                    ],
-                },
-            ],
-            obsCoreCalibrationLevel: {
-                tooltip: 'Calibration Level',
-                helptext: '1 is raw data; 2 is PVIs; 3 includes coadds and difference images',
-                level: {
-                    1: {title: 'For Rubin: Raw Data'},
-                    2: {title: 'For Rubin: PVIs'},
-                    3: {title: 'For Rubin: Coadds and Difference Images'},
-                },
-            },
-            obsCoreInstrumentName: {
-                tooltip: 'LSSTCam, LSSTCam-imSim',
-                placeholder: 'e.g. LSSTCam-imSim',
-            },
-            obsCoreSubType: {
-                tooltip: 'Specific type of image or other dataset',
-                placeholder: 'e.g. lsst.deepCoadd_calexp',
-                helptext: '"lsst." + Butler Repo Dataset type',
-            },
-        }
     },
     hips: {
         readoutShowsPixel : true,
-        hipsSources: 'lsst,cds',
-        defHipsSources: {source: 'lsst', label: 'Rubin Featured'},
-        mergedListPriority: 'lsst',
-        adhocMocSource: {
-            sources: [
-                'temp://lsst/dp02_dc2/hips/images/color_gri',
-                'temp://lsst/dp02_dc2/hips/images/band_u',
-                'temp://lsst/dp02_dc2/hips/images/band_g',
-            ],
-            label: 'Rubin Featured MOC '
-        },
+        hipsSources: 'cds',
+        // defHipsSources: {source: 'cds', label: 'Featured'},
+        // mergedListPriority: 'cds'
     },
     // workspace: {showOptions: true},
     /* eslint-disable quotes */
