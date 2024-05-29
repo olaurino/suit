@@ -7,7 +7,10 @@ import {LandingPage} from 'firefly/templates/fireflyviewer/LandingPage';
 const RubinBranding = ({}) => (
     <Stack alignItems='center'>
         <Typography sx={{fontSize: 'xl4'}} color='neutral'>
-            Rubin Science Platform Portal
+            CfA Nexus Portal
+        </Typography>
+        <Typography sx={{fontSize: 'sm4'}} color='neutral'>
+            Based on the <a href="https://rsp.lsst.io/guides/portal/index.html">Rubin Science Platform Portal</a>
         </Typography>
     </Stack>
 );

@@ -17,7 +17,7 @@ import {getFireflyViewerWebApiCommands} from 'firefly/api/webApiCommands/ViewerW
 import './suit.css';
 import {makeLsstClickToAction, makeLsstTapEntry, LSST_DP02_DC2, LSST_DP03_SSO} from './actions.jsx';
 import {RubinLanding} from './RubinLanding.jsx';
-import APP_ICON from '../html/images/rubin-favicon-transparent-45px.png';
+import APP_ICON from '../html/images/favicon-2.png';
 import {makeDachsTapEntry, makeChandraTapEntry} from './actions.jsx';
 import {makeWorldPt} from 'firefly/visualize/Point.js';
 
@@ -55,7 +55,7 @@ let props = {
 
         {label: 'Upload', action: 'FileUploadDropDownCmd', primary:true}
     ],
-    appTitle: 'Rubin Portal',
+    appTitle: 'CfA Nexus Portal',
     landingPage: <RubinLanding/>,
     fileDropEventAction: 'FileUploadDropDownCmd',
     slotProps: set({}, 'banner.slotProps.icon.style', {margin: '3px 10px 0 10px'}),
